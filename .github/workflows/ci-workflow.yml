@@ -1,0 +1,35 @@
+name: CI workflow
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  run_tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Truffle
+        run: npm install truffle -g
+      
+      - name: Run Codechecks
+        run: npx codechecks
+        env:
+          CC_SECRET: ${{ secrets.CC_SECRET }}
+
+      - name: Run Tests
+        run: CI=true truffle test
+
+      - name: Run Test Coverage
+        run: truffle run coverage
