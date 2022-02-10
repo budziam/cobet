@@ -31,5 +31,5 @@ jobs:
       - name: Run Tests
         run: CI=true truffle test
 
-      - name: Run Test Coverage
-        run: truffle run coverage
+      # - name: Run Test Coverage
+      #   run: truffle run coverage
