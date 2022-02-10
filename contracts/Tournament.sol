@@ -8,23 +8,14 @@ contract Tournament {
     uint256 public buyIn;
     mapping(address => bool) public participants;
 
-    constructor( uint256 _buyIn) {
+    constructor(uint256 _buyIn) {
        dealer = msg.sender;
        buyIn = _buyIn;
     }
 
-    event test_prod(address indexed value);
-
     function participate() public payable {
         require(msg.value == buyIn, "You need to send exact amount");
-
         participants[msg.sender] = true;
-        emit test_prod(msg.sender);
-
-    }
-
-    function hasParticipant(address participant) public view returns (bool) {
-        return participants[participant];
     }
 
     function eval(address payable[] memory ranking) public {
