@@ -23,10 +23,10 @@ jobs:
       - name: Install Truffle
         run: npm install truffle -g
       
-      - name: Run Codechecks
-        run: npx codechecks
-        env:
-          CC_SECRET: ${{ secrets.CC_SECRET }}
+      # - name: Run Codechecks
+      #   run: npx codechecks
+      #   env:
+      #     CC_SECRET: ${{ secrets.CC_SECRET }}
 
       - name: Run Tests
         run: CI=true truffle test
