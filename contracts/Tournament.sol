@@ -2,25 +2,44 @@
 pragma solidity ^0.8.10;
 
 contract Tournament {
+
+    enum State { Ongoing, BetsClosed, Failed, PaidOut }
+
     uint public immutable COMMISSION = 5;
     
     address public dealer;
     uint256 public buyIn;
+    uint256 public id;
+    State public state;
     mapping(address => bool) public participants;
 
-    constructor(uint256 _buyIn) {
-       dealer = msg.sender;
-       buyIn = _buyIn;
+    // Randomly generated password for users
+
+    constructor(
+        uint256 _id,
+        uint256 _buyIn
+    ) {
+        dealer = msg.sender;
+        id = _id;
+        buyIn = _buyIn;
+        state = State.Ongoing;
     }
 
-    function participate() public payable {
+    modifier isDealer {
+        require(msg.sender == dealer, "You have to be dealer to evaluate a tournament");
+        _;
+    }
+
+    modifier isBalanceSufficient {
         require(msg.value == buyIn, "You need to send exact amount");
+        _;
+    }
+
+    function participate() public payable isBalanceSufficient {
         participants[msg.sender] = true;
     }
 
-    function eval(address payable[] memory ranking) public {
-        require(msg.sender == dealer, "You have to be dealer to evaluate a tournament");
-
+    function eval(address payable[] memory ranking) public isDealer {
         for (uint16 i = 0; i < ranking.length; ++i) {
             require(participants[ranking[i]], "Address has to be one of the participants");
         }
