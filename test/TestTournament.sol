@@ -7,7 +7,7 @@ contract TestTournament {
     uint public initialBalance = 1 ether;
 
     function testTournamentGetNumber() public {
-        Tournament tournament = new Tournament(1000, 101);
+        Tournament tournament = new Tournament(1000);
         tournament.participate{value: 1000}();
         Assert.equal(tournament.participants(address(this)), true, "Participant is not registered");
     }

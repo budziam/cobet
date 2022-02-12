@@ -9,18 +9,15 @@ contract Tournament {
     
     address public dealer;
     uint256 public buyIn;
-    uint256 public id;
     State public state;
     mapping(address => bool) public participants;
 
     // Randomly generated password for users
 
     constructor(
-        uint256 _id,
         uint256 _buyIn
     ) {
         dealer = msg.sender;
-        id = _id;
         buyIn = _buyIn;
         state = State.Ongoing;
     }
