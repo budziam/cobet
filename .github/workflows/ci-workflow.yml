@@ -20,8 +20,8 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install Truffle
-        run: npm install truffle -g
+      - name: Install npm dependencies
+        run: npm install
       
       # - name: Run Codechecks
       #   run: npx codechecks
@@ -29,7 +29,7 @@ jobs:
       #     CC_SECRET: ${{ secrets.CC_SECRET }}
 
       - name: Run Tests
-        run: CI=true truffle test
+        run: CI=true ./node_modules/.bin/truffle test
 
       # - name: Run Test Coverage
       #   run: truffle run coverage
